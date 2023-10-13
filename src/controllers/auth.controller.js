@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const CustomError = require("../utility/CustomError");
+const CustomError = require("../utils/CustomError");
 
 const signup = async (req, res, next) => {
   try {
