@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
+const session = require("express-session");
+const cookie = require("cookie-parser");
 const fileupload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 
-const authRouter = require("./routes/authRoute");
+const authRouter = require("./routes/auth.route");
 
+const app = express();
 //cloudinary configation
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -12,8 +16,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
+//session and cookie middleware
+app.use(cookie());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 5 * 60 * 1000,
+    },
+  })
+);
+//logger middleware
+app.use(morgan("tiny"));
 //middleware
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 app.use(express.json());
 app.use(
@@ -24,13 +41,14 @@ app.use(
 );
 
 app.use("/api/v1", authRouter);
-app.use("/api/v1", userRouter);
-app.use("/api/v1", restaurantRouter);
-app.use("/api/v1", orderRouter);
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   // console.log(req)
-  res.send("Welcome to Food Delivery System");
+  // res.send("Not found");
+  res.status(404).json({
+    success: false,
+    msg: "Not found",
+  });
 });
 
 // error handler
