@@ -1,7 +1,9 @@
 const User = require("../models/user.model");
+const CustomError = require("../utils/CustomError");
 const updateUserInfo = async (req, res, next) => {
   try {
-    let user = await User.findOne(req.user.email);
+    const { email } = req.user;
+    let user = await User.findOne({ email });
 
     user = await User.findByIdAndUpdate(req.user._id, req.body, {
       new: true,
@@ -157,7 +159,6 @@ const resetPassword = async (req, res, next) => {
 };
 
 module.exports = {
-  userDashboard,
   updateUserInfo,
   updateUserPassword,
   forgotPassword,

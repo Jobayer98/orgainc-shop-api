@@ -7,6 +7,7 @@ const fileupload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 
 const authRouter = require("./routes/auth.route");
+const userRouter = require("./routes/user.route");
 
 const app = express();
 //cloudinary configation
@@ -18,14 +19,14 @@ cloudinary.config({
 
 //session and cookie middleware
 app.use(cookie());
-// app.use(
-//   session({
-//     secret: process.env.JWT_SECRET,
-//     httpOnly: true,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    httpOnly: true,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 //logger middleware
 app.use(morgan("tiny"));
 //middleware
@@ -39,6 +40,7 @@ app.use(
 );
 
 app.use("/api/v1", authRouter);
+app.use("/api/v1", userRouter);
 
 app.get("*", (req, res) => {
   // console.log(req)
