@@ -11,8 +11,13 @@ const signup = async (req, res, next) => {
 
     user = await User.create(req.body);
     const token = await user.generateToken();
-    user.password = undefined;
-    res.status(201).json({
+
+    const option = {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    res.status(200).cookie("token", token, option).json({
       success: true,
       data: user,
       token,
@@ -26,6 +31,7 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
       throw new CustomError("Account doesn't exist", 400);
     }
@@ -37,8 +43,13 @@ const login = async (req, res, next) => {
     }
 
     const token = await user.generateToken();
-    user.password = undefined;
-    res.status(200).json({
+
+    const option = {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    res.status(200).cookie("token", token, option).json({
       success: true,
       data: user,
       token,

@@ -90,9 +90,20 @@ userSchema.pre("save", async function (next) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
-  this.password = bcrypt.hash(this.password, salt);
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+  delete userObject.password;
+  delete userObject.tokens;
+  delete userObject.forgotPasswordToken;
+  delete userObject.forgotPasswordTokenExpiry;
+
+  return userObject;
+};
 
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);

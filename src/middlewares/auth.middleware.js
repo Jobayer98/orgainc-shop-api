@@ -4,7 +4,8 @@ const CustomError = require("../utils/CustomError");
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
+    const token =
+      req.cookies.token || req.header("Authorization")?.replace("Bearer ", "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findOne({
@@ -21,7 +22,7 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    next(new CustomError(error, 400));
+    next(new CustomError("invalid credentials or session expired", 400));
   }
 };
 
