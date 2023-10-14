@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const session = require("express-session");
 const cookie = require("cookie-parser");
 const fileupload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
@@ -17,7 +18,14 @@ cloudinary.config({
 
 //session and cookie middleware
 app.use(cookie());
-
+// app.use(
+//   session({
+//     secret: process.env.JWT_SECRET,
+//     httpOnly: true,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 //logger middleware
 app.use(morgan("tiny"));
 //middleware
