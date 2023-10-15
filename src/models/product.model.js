@@ -59,6 +59,10 @@ const productSchema = new Schema({
     required: true,
     ref: "User",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const ProductModel = model("Products", productSchema);

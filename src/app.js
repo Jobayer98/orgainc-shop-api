@@ -8,6 +8,7 @@ const cloudinary = require("cloudinary").v2;
 
 const authRouter = require("./routes/auth.route");
 const userRouter = require("./routes/user.route");
+const productRouter = require("./routes/product.route");
 
 const app = express();
 //cloudinary configation
@@ -41,6 +42,7 @@ app.use(
 
 app.use("/api/v1", authRouter);
 app.use("/api/v1", userRouter);
+app.use("/api/v1", productRouter);
 
 app.get("*", (req, res) => {
   // console.log(req)
