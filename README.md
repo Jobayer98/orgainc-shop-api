@@ -28,7 +28,7 @@ This is an organic e-commerce web application built with React.js, Express.js, M
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/Jobayer98/OrganicShop.git
+git clone https://github.com/Jobayer98/orgainc-shop-api.git
 ```
 
 
@@ -38,6 +38,27 @@ git clone https://github.com/Jobayer98/OrganicShop.git
 cd organic-shop-api
 npm install
 npm run dev
+```
+
+3. **Set Environment Variables:**
+
+Create a `.env` file in the root directory and configure the following environment variables:
+
+```bash
+JWT_SECRET=your-jwt-secret
+SESSION_SECRET=mysessionsecret
+MONGO_URI=your-mongodb-uri
+
+SMPT_HOST=your-host-name
+SMPT_PORT=your-smpt-port
+SMPT_USER=your-smpt-user
+SMPT_PASS=your-smpt-pass
+
+STRIPE_SECRET_KEY=your-stripe-secret-key
+
+CLOUDINARY_NAME=your-cloudinary-name
+CLOUDINARY_KEY=your-cloudinary-key
+CLOUDINARY_SECRET=your-cloudinary-secret
 ```
 
 ## Author
