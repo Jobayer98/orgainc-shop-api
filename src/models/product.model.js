@@ -16,7 +16,7 @@ const productSchema = new Schema({
     trim: true,
   },
   weight: {
-    type: Number,
+    type: String,
     required: true,
   },
   category: {
@@ -27,16 +27,19 @@ const productSchema = new Schema({
   image: {
     id: {
       type: String,
-      required: true,
     },
-    secure_url: {
+    url: {
       type: String,
-      required: true,
     },
   },
   rating: {
     type: Number,
     default: 0,
+  },
+  stock: {
+    type: String,
+    required: true,
+    default: "in-stock",
   },
   reviews: [
     {

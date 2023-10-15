@@ -59,7 +59,10 @@ const userSchema = new Schema(
     },
     image: {
       id: String,
-      secure_url: String,
+      secure_url: {
+        type: String,
+        default: "",
+      },
     },
     role: {
       type: String,
