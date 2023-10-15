@@ -131,6 +131,25 @@ const updateProductByAdmin = async (req, res, next) => {
   }
 };
 
+const deleteProductByAdmin = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const product = await ProductModel.findByIdAndDelete(id);
+
+    if (!product) {
+      return next(new CustomError("Product not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      msg: "Product deleted successfully",
+    });
+  } catch (error) {
+    return next(new CustomError(error, 400));
+  }
+};
+
 module.exports = {
   getProducts,
   getProduct,
@@ -138,4 +157,5 @@ module.exports = {
   getAdminProducts,
   getAdminProduct,
   updateProductByAdmin,
+  deleteProductByAdmin,
 };
